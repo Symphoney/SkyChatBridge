@@ -1,0 +1,6 @@
+name: SkyChatBridge
+version: '${version}'
+main: com.skyworld.skychatbridge.SkyChatBridge
+api-version: '1.21'
+softdepend:
+  - SuperiorSkyblock2
