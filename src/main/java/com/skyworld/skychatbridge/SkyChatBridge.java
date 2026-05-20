@@ -4,20 +4,22 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SkyChatBridge extends JavaPlugin {
 
+    private DiscordManager discordManager;
+
     @Override
     public void onEnable() {
-        // Plugin startup logic
-
         saveDefaultConfig();
-        boolean enabled = getConfig().getBoolean("discord.enabled");
-        String token = getConfig().getString("discord.token");
-        String guildId = getConfig().getString("discord.guild-id");
-        String channelId = getConfig().getString("discord.channel-id");
 
+        discordManager = new DiscordManager(this);
+        if (discordManager.start()) {
+            getServer().getPluginManager().registerEvents(new MinecraftChatListener(discordManager), this);
+        }
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        if (discordManager != null) {
+            discordManager.shutdown();
+        }
     }
 }
